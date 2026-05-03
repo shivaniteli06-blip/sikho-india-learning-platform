@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0f766e">
+    <title>Sikho India Tutor</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="styles.css?v=6">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">SI</div>
+        <div>
+          <h1>Sikho India</h1>
+          <p>Offline-first AI education for rural students</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <div class="status-strip" role="status" aria-live="polite">
+          <span id="connectionDot" class="dot"></span>
+          <span id="connectionText">Checking connection</span>
+        </div>
+        <button id="logoutStudent" class="ghost-btn" hidden>Logout</button>
+      </div>
+    </header>
+
+    <main id="loginPage" class="login-page">
+      <section class="login-card">
+        <div>
+          <p class="eyebrow">Student access</p>
+          <h2>Welcome to Sikho India</h2>
+          <p>Only registered students can login. Your profile, standard, language, chapter progress, mock tests, and quiz history are saved locally for offline learning.</p>
+        </div>
+
+        <div class="auth-switch" role="tablist" aria-label="Student access">
+          <button id="showRegister" class="auth-tab active" type="button">Registration page</button>
+          <button id="showLogin" class="auth-tab" type="button">Login portal</button>
+        </div>
+
+        <div id="registerPanel" class="auth-panel active">
+          <div class="login-form">
+            <label>Student name
+              <input id="registerName" type="text" placeholder="Enter student name" autocomplete="name">
+            </label>
+            <label>Student ID
+              <input id="registerId" type="text" placeholder="Create ID like asha01" autocomplete="username">
+            </label>
+            <label>Create PIN
+              <input id="registerPin" type="password" placeholder="4 digit PIN" autocomplete="new-password">
+            </label>
+            <label>Standard
+              <select id="registerGrade"></select>
+            </label>
+            <label>Preferred language
+              <select id="registerLanguage"></select>
+            </label>
+            <label>School type
+              <select id="registerSchoolType">
+                <option>Rural government school</option>
+                <option>Community learning center</option>
+                <option>Home learning</option>
+                <option>Low-connectivity private school</option>
+              </select>
+            </label>
+          </div>
+          <button id="registerStudent" class="primary-btn">Register student</button>
+        </div>
+
+        <div id="loginPanel" class="auth-panel">
+          <div class="login-form">
+            <label>Student ID
+              <input id="loginId" type="text" placeholder="Example: asha01" autocomplete="username">
+            </label>
+            <label>PIN
+              <input id="loginPin" type="password" placeholder="4 digit PIN" autocomplete="current-password">
+            </label>
+          </div>
+          <button id="loginStudent" class="primary-btn">Login and start learning</button>
+        </div>
+        <p id="loginMessage" class="form-message" role="status" aria-live="polite"></p>
+        <button id="resetAccess" class="link-btn" type="button">Clear old test registrations</button>
+      </section>
+    </main>
+
+    <main id="appShell" class="app-shell" hidden>
+      <aside class="sidebar" aria-label="Student workspace">
+        <section class="profile-card">
+          <div class="avatar" id="profileAvatar">S</div>
+          <div>
+            <p class="eyebrow">Student Profile</p>
+            <h2 id="profileName">New learner</h2>
+            <p id="profileMeta">1st Standard | English | Rural school</p>
+          </div>
+        </section>
+
+        <nav class="side-nav" aria-label="Main navigation">
+          <button class="nav-btn active" data-tab="dashboard">Dashboard</button>
+          <button class="nav-btn" data-tab="profile">Profile</button>
+          <button class="nav-btn" data-tab="lessons">Chapters</button>
+          <button class="nav-btn" data-tab="tutor">Tutor Assistant</button>
+          <button class="nav-btn" data-tab="mocktest">Mock Test</button>
+          <button class="nav-btn" data-tab="mentor">Guidance</button>
+        </nav>
+
+        <section class="panel offline-card">
+          <h2>Offline Content</h2>
+          <div class="sync-meter" aria-hidden="true"><span id="syncBar"></span></div>
+          <p id="syncText">Core chapters and quizzes are cached for offline study.</p>
+          <button id="downloadPack" class="secondary-btn">Save full village pack</button>
+        </section>
+      </aside>
+
+      <section class="main-stage">
+        <section class="hero-band">
+          <div>
+            <p class="eyebrow">Localized voice learning</p>
+            <h2 id="welcomeTitle">A smart classroom that works without strong internet</h2>
+            <p id="welcomeCopy">Learn Mathematics, Science, Social Science, English, and regional language skills with voice support, adaptive quizzes, and local progress tracking.</p>
+          </div>
+          <div class="hero-stats" aria-label="Platform summary">
+            <article>
+              <strong id="chapterCount">0</strong>
+              <span>chapters</span>
+            </article>
+            <article>
+              <strong>22</strong>
+              <span>Indian languages</span>
+            </article>
+            <article>
+              <strong>100%</strong>
+              <span>offline ready</span>
+            </article>
+          </div>
+        </section>
+
+        <section id="dashboard" class="tab-panel active">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Dashboard</p>
+              <h2>Today&apos;s learning path</h2>
+            </div>
+            <p id="recommendationReason">Recommendations update after every quiz.</p>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="metric-card">
+              <span>Completed</span>
+              <strong id="completedCount">0</strong>
+              <p>quiz attempts on this device</p>
+            </article>
+            <article class="metric-card">
+              <span>Accuracy</span>
+              <strong id="accuracyValue">0%</strong>
+              <p>based on local quiz history</p>
+            </article>
+            <article class="metric-card">
+              <span>Focus Subject</span>
+              <strong id="focusSubject">Mathematics</strong>
+              <p>adaptive support area</p>
+            </article>
+          </div>
+
+          <div class="subject-board" id="subjectBoard"></div>
+        </section>
+
+        <section id="profile" class="tab-panel">
+          <div class="profile-layout">
+            <section class="panel">
+              <p class="eyebrow">Profile setup</p>
+              <h2>Student details</h2>
+              <div class="form-grid">
+                <label>Student name
+                  <input id="studentName" type="text" placeholder="Asha" autocomplete="name">
+                </label>
+                <label>Class
+                  <select id="gradeSelect"></select>
+                </label>
+                <label>Learning language
+                  <select id="languageSelect"></select>
+                </label>
+                <label>School type
+                  <select id="schoolType">
+                    <option>Rural government school</option>
+                    <option>Community learning center</option>
+                    <option>Home learning</option>
+                    <option>Low-connectivity private school</option>
+                  </select>
+                </label>
+                <label>Daily study time
+                  <select id="studyTime">
+                    <option value="15">15 minutes</option>
+                    <option value="30">30 minutes</option>
+                    <option value="45">45 minutes</option>
+                    <option value="60">60 minutes</option>
+                  </select>
+                </label>
+                <label>Learning goal
+                  <select id="learningGoal">
+                    <option>Improve basics</option>
+                    <option>Prepare for exams</option>
+                    <option>Practice spoken learning</option>
+                    <option>Catch up missed classes</option>
+                  </select>
+                </label>
+              </div>
+              <button id="saveProfile" class="primary-btn">Save learner profile</button>
+            </section>
+
+            <section class="panel">
+              <p class="eyebrow">Needs supported</p>
+              <h2>Rural learning barriers</h2>
+              <ul class="feature-list">
+                <li>Offline chapters for weak internet areas</li>
+                <li>Voice reading and speech answers where supported</li>
+                <li>Regional language interface and explanation support</li>
+                <li>Adaptive quizzes for personalized guidance</li>
+                <li>Teacher summary saved locally on shared devices</li>
+              </ul>
+            </section>
+          </div>
+        </section>
+
+        <section id="lessons" class="tab-panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Chapter library</p>
+              <h2>Subjects and quizzes</h2>
+            </div>
+            <div class="filters">
+              <select id="subjectFilter" aria-label="Filter by subject">
+                <option value="all">All subjects</option>
+              </select>
+              <select id="levelFilter" aria-label="Filter by class">
+                <option value="all">All classes</option>
+              </select>
+            </div>
+          </div>
+          <div id="lessonGrid" class="lesson-grid"></div>
+        </section>
+
+        <section id="tutor" class="tab-panel">
+          <div class="tutor-layout">
+            <section class="panel lesson-player">
+              <div class="player-head">
+                <div>
+                  <p class="eyebrow">Tutor Assistant</p>
+                  <h2 id="lessonTitle">Select a chapter</h2>
+                </div>
+                <button id="speakLesson" class="icon-btn" title="Read aloud" aria-label="Read aloud">Play</button>
+              </div>
+              <p id="lessonBody">Choose any chapter to get a local-language explanation, quiz, and adaptive feedback.</p>
+
+              <div id="assistantBox" class="assistant-box">
+                <p id="assistantMessage">Ask for help in your selected language. The tutor assistant gives offline guidance from the current chapter.</p>
+                <div class="assistant-actions">
+                  <button class="secondary-btn" data-help="simple">Explain simply</button>
+                  <button class="secondary-btn" data-help="example">Give village example</button>
+                  <button class="secondary-btn" data-help="revise">Make revision plan</button>
+                </div>
+              </div>
+
+              <div id="questionBox" class="question-box" hidden>
+                <h3 id="questionText"></h3>
+                <div id="answerOptions" class="answer-options"></div>
+                <div class="voice-row">
+                  <button id="voiceAnswer" class="secondary-btn">Answer by voice</button>
+                  <span id="voiceResult"></span>
+                </div>
+                <div id="completionActions" class="completion-actions" hidden>
+                  <button id="nextChapter" class="primary-btn">Next chapter</button>
+                  <button id="backToChapters" class="secondary-btn">Back to chapters</button>
+                </div>
+              </div>
+            </section>
+
+            <aside class="panel coach-card">
+              <p class="eyebrow">Adaptive coach</p>
+              <h2>Progress by subject</h2>
+              <div id="progressList" class="progress-list"></div>
+              <p id="coachMessage">Complete a quiz and I will suggest the next best chapter.</p>
+            </aside>
+          </div>
+        </section>
+
+        <section id="mocktest" class="tab-panel">
+          <div class="mock-layout">
+            <article class="panel">
+              <p class="eyebrow">Mock test</p>
+              <h2>Subject-wise practice test</h2>
+              <p id="mockIntro">Start a mock test for your selected standard and selected subject. Mock questions are separate from chapter quiz questions.</p>
+              <label>Choose subject
+                <select id="mockSubjectSelect"></select>
+              </label>
+              <button id="startMockTest" class="primary-btn">Start mock test</button>
+              <div id="mockTestBox" class="question-box" hidden>
+                <p id="mockProgressText"></p>
+                <h3 id="mockQuestionText"></h3>
+                <div id="mockAnswerOptions" class="answer-options"></div>
+              </div>
+            </article>
+            <article class="panel">
+              <p class="eyebrow">Mock result</p>
+              <h2>Performance</h2>
+              <p id="mockResult">No mock test attempted yet.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="mentor" class="tab-panel">
+          <div class="mentor-grid">
+            <article class="panel">
+              <p class="eyebrow">Personal guidance</p>
+              <h2>Weekly study plan</h2>
+              <p id="guidanceText">Save a learner profile and complete one quiz to receive targeted support.</p>
+              <button id="makePlan" class="primary-btn">Create weekly study plan</button>
+            </article>
+            <article class="panel">
+              <p class="eyebrow">Teacher view</p>
+              <h2>Student snapshot</h2>
+              <ul id="teacherNotes" class="notes-list">
+                <li>No activity yet. Progress will be stored on this device.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Built for limited connectivity, local-language classrooms, and personalized rural learning support.</span>
+    </footer>
+
+    <script src="app.js?v=6"></script>
+  </body>
+</html>
